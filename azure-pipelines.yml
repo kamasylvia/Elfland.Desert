@@ -41,21 +41,20 @@ steps:
     continueOnError: true
     inputs:
       script: |
+        git checkout $(Build.SourceBranchName)
+        git add -A
+        git commit --allow-empty -m "Format source code with CSharpier [skip ci]"
+        git push
+    displayName: "Push back to remote."
+  - task: CmdLine@2
+    continueOnError: true
+    inputs:
+      script: |
         git config --global user.email "$(EMAIL)"
         git config --global user.name "$(USERNAME)"
         git clone --mirror $(Build.Repository.Uri) $(Build.Repository.Name)
         git -C $(Build.Repository.Name) push --mirror https://$(GITHUB_PAT)@$(GITHUB_REPO)
     displayName: "Sync with GitHub repo"
-
-  # Push formatted code back to remote repository
-  - task: CmdLine@2
-    continueOnError: true
-    inputs:
-      script: |
-        git checkout $(Build.SourceBranchName)
-        git add -A
-        git commit --allow-empty -m "Format source code with CSharpier [skip ci]"
-        git push
   - task: DotNetCoreCLI@2
     inputs:
       command: 'pack'
