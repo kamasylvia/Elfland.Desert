@@ -8,7 +8,8 @@ public static class DecryptEventKey
         string timestamp,
         string nonce,
         string encryptKey,
-        string body)
+        string body
+    )
     {
         StringBuilder content = new StringBuilder();
         content.Append(timestamp);

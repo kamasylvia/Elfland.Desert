@@ -26,7 +26,8 @@ public class ExcelDocument : IDisposable
         InitializeSpreadsheetDocument();
     }
 
-    public ExcelDocument(string filepath, string sheetName) : this(filepath) => InsertWorksheet(sheetName);
+    public ExcelDocument(string filepath, string sheetName) : this(filepath) =>
+        InsertWorksheet(sheetName);
 
     private void InitializeSpreadsheetDocument()
     {
@@ -52,7 +53,8 @@ public class ExcelDocument : IDisposable
 
         // Add a WorksheetPart to the WorkbookPart.
         var sheets = _spreadsheetDocument!.WorkbookPart?.Workbook.GetFirstChild<Sheets>();
-        WorksheetPart worksheetPart = _spreadsheetDocument!.WorkbookPart!.AddNewPart<WorksheetPart>();
+        WorksheetPart worksheetPart =
+            _spreadsheetDocument!.WorkbookPart!.AddNewPart<WorksheetPart>();
         worksheetPart.Worksheet = new Worksheet(new SheetData());
 
         var sheet = new Sheet()
@@ -79,9 +81,9 @@ public class ExcelDocument : IDisposable
             );
         }
 
-        var sheet = _spreadsheetDocument!.WorkbookPart?.Workbook?
-            .GetFirstChild<Sheets>()?
-            .Elements<Sheet>()
+        var sheet = _spreadsheetDocument!.WorkbookPart
+            ?.Workbook?.GetFirstChild<Sheets>()
+            ?.Elements<Sheet>()
             .Where(s => s.Name == sheetName)
             .FirstOrDefault();
 
@@ -100,7 +102,6 @@ public class ExcelDocument : IDisposable
                 nameof(filepath)
             );
         }
-
     }
 
     private bool _disposed = false;
