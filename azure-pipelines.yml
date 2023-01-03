@@ -41,6 +41,7 @@ steps:
     continueOnError: true
     inputs:
       script: |
+        git fetch
         git checkout $(Build.SourceBranchName)
         git add -A
         git commit --allow-empty -m "Format source code with CSharpier [skip ci]"
